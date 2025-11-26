@@ -2,10 +2,11 @@
 
 
 def load_data():
-
     import pandas as pd
+    from pathlib import Path
 
-    dataset = pd.read_csv("../files/input/heart_disease.csv")
+    csv_path = Path(__file__).resolve().parent.parent / "files" / "input" / "heart_disease.csv"
+    dataset = pd.read_csv(csv_path)
     y = dataset.pop("target")
     x = dataset.copy()
     x["thal"] = x["thal"].map(
@@ -17,12 +18,13 @@ def load_data():
 
 def load_estimator():
 
-    import os
     import pickle
+    from pathlib import Path
 
-    if not os.path.exists("estimator.pickle"):
+    estimator_path = Path(__file__).resolve().parent.parent / "homework" / "estimator.pickle"
+    if not estimator_path.exists():
         return None
-    with open("estimator.pickle", "rb") as file:
+    with open(estimator_path, "rb") as file:
         estimator = pickle.load(file)
 
     return estimator
